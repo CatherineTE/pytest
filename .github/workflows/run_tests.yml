@@ -20,12 +20,16 @@ jobs:
     steps:
      - name: Copy source code
        uses: actions/checkout@v4
+     - name: Reinstall packaging module
+       run: |
+        pip uninstall -y packaging
+        pip install --no-cache-dir packaging  
      - name: Upgrade pip, setuptools, and wheel
        run: python -m pip install --upgrade pip setuptools wheel
      - name: Set up Python env
        uses: actions/setup-python@v5  
        with:
-         python-version: "3.13"
+         python-version: "3.12"
      - name: install dependencies
        run: pip install -r requirements.txt
      - name: Run tests
