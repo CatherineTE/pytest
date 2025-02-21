@@ -29,41 +29,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-     - name: Install Google Chrome
-       run: |
-          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
-          sudo apt update
-          sudo apt install -y google-chrome-stable
-
-     - name: Verify Google Chrome installation
-       run: google-chrome --version
-
-     - name: Get Chrome version
-       run: |
-        CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d'.' -f1)
-        echo "Detected Chrome version: $CHROME_VERSION"
-        echo "CHROME_VERSION=$CHROME_VERSION" >> $GITHUB_ENV
-
-     - name: Get ChromeDriver version
-       run: |
-        echo "Fetching ChromeDriver for major version $CHROME_VERSION"
-        DRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
-        if [ -z "$DRIVER_VERSION" ]; then
-          echo "Failed to fetch ChromeDriver version"
-          exit 1
-        fi
-        echo "Detected ChromeDriver version: $DRIVER_VERSION"
-        echo "DRIVER_VERSION=$DRIVER_VERSION" >> $GITHUB_ENV
-
-
-     - name: Install ChromeDriver
-       run: |
-          wget -q "https://chromedriver.storage.googleapis.com/$DRIVER_VERSION/chromedriver_linux64.zip"
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-          rm chromedriver_linux64.zip
-
      - name: Verify ChromeDriver installation
        run: chromedriver --version
        
