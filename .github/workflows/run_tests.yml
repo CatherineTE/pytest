@@ -29,8 +29,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-     - name: Verify ChromeDriver installation
-       run: chromedriver --version
+     - name: get CHrome and Driver versions
+       run:
+         $ "CHROME_BIN" --version ; "$CHROMEWEBDRIVER/chromedriver --version"
        
      - name: Run tests   
        run: pytest -v
