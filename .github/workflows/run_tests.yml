@@ -29,6 +29,12 @@ jobs:
      - name: Upgrade pip, setuptools, and wheel
        run: python -m pip install --upgrade pip setuptools wheel
 
+     - name: Patch pip to fix invalid version issue
+       run: |
+         sed -i 's/self.version = Version(version)/self.version = Version(version.split("-")[0])/' \
+         $(python -c "import pip; print(pip.__file__)")/../_vendor/packaging/version.py
+  
+
      - name: Force install packaging module
        run: |
          pip install --force-reinstall --no-cache-dir --ignore-installed "packaging<24.0"
