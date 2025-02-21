@@ -29,9 +29,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-     - name: get CHrome and Driver versions
-       run:
-         $ "CHROME_BIN" --version ; "$CHROMEWEBDRIVER/chromedriver --version"
+     - name: Get Chrome version
+       run: |
+          CHROME_VERSION=$(google-chrome --version)
+          echo "Detected Chrome version: $CHROME_VERSION"
+
+     - name: Get ChromeDriver version
+       run: |
+        DRIVER_VERSION=$(chromedriver --version)
+        echo "Detected ChromeDriver version: $DRIVER_VERSION"
        
      - name: Run tests   
        run: pytest -v
